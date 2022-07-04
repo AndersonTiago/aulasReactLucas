@@ -1,13 +1,13 @@
 import { Api } from "../ApiConfig";
-import { ApiException } from "../ErrorException";
+import { ApiException } from "../ApiException";
 
-interface ITarefa {
+export interface ITarefa {
   id: number;
   title: string;
   isCompleted: boolean;
 }
 
-const getAll = async (): Promise<ITarefa | ApiException> => {
+const getAll = async (): Promise<ITarefa[] | ApiException> => {
   try {
     const { data } = await Api().get("/tarefas");
     return data;
@@ -15,6 +15,7 @@ const getAll = async (): Promise<ITarefa | ApiException> => {
     return new ApiException(error.message || "Erro ao buscar os registros.");
   }
 };
+
 const getById = async (id: number): Promise<ITarefa | ApiException> => {
   try {
     const { data } = await Api().get(`/tarefas/${id}`);
