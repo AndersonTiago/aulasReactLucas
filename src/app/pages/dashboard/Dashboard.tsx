@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-
-
 import { ApiException } from '../../shared/services/api/ApiException';
 import { ITarefa, TarefasService } from '../../shared/services/api/tarefas/TarefaService';
 
@@ -26,18 +24,22 @@ export const Dashboard = () => {
 
             e.currentTarget.value = ''
 
-            setLista((oldList) => {
+            if (lista.some((listItem) => listItem.title === value)) return
 
-                if (oldList.some((listItem) => listItem.title === value)) return oldList
-
-                return [...oldList, {
-                    id: oldList.length,
-                    title: value,
-                    isCompleted: false
-                }]
+            TarefasService.create({
+                title: value,
+                isCompleted: false
+            }).then((result) => {
+                if (result instanceof ApiException) {
+                    alert(result.message);
+                } else {
+                    setLista((oldList) => [...oldList, result])
+                }
             })
+
+
         }
-    }, [])
+    }, [lista])
 
     return (
         <div>
