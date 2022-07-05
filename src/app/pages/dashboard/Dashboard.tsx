@@ -58,9 +58,20 @@ export const Dashboard = () => {
                 })
             }
         })
-
-
     }, [lista])
+
+    const handleTogleDelete = useCallback((id: number) => {
+        TarefasService.deleteById(id)
+            .then((result) => {
+                if (result instanceof ApiException) {
+                    alert(result.message);
+                } else {
+                    setLista(oldList => {
+                        return oldList.filter(oldListItem => oldListItem.id !== id)
+                    })
+                }
+            })
+    }, [])
 
     return (
         <div>
@@ -81,6 +92,7 @@ export const Dashboard = () => {
                                 onChange={() => handleTogleComplete(listItem.id)}
                             />
                             {listItem.title}
+                            <button onClick={() => handleTogleDelete(listItem.id)}>Apagar</button>
                         </li>
                     })
                 }
