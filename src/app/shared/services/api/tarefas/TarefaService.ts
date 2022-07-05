@@ -37,7 +37,7 @@ const create = async (
 };
 
 const updateById = async (
-  id: string,
+  id: number,
   dataToUpdate: ITarefa
 ): Promise<ITarefa | ApiException> => {
   try {
@@ -48,7 +48,7 @@ const updateById = async (
   }
 };
 
-const deleteById = async (id: string): Promise<undefined | ApiException> => {
+const deleteById = async (id: number): Promise<undefined | ApiException> => {
   try {
     await Api().get(`/tarefas/${id}`);
     return undefined;

@@ -36,9 +36,30 @@ export const Dashboard = () => {
                     setLista((oldList) => [...oldList, result])
                 }
             })
-
-
         }
+    }, [lista])
+
+    const handleTogleComplete = useCallback((id: number) => {
+        const tarefaToUpdate = lista.find((tarefa) => tarefa.id === id)
+        if (!tarefaToUpdate) return
+
+        TarefasService.updateById(id, {
+            ...tarefaToUpdate,
+            isCompleted: !tarefaToUpdate.isCompleted,
+        }).then((result) => {
+            if (result instanceof ApiException) {
+                alert(result.message);
+            } else {
+                setLista(oldList => {
+                    return oldList.map(oldListItem => {
+                        if (oldListItem.id === id) return result
+                        return oldListItem
+                    })
+                })
+            }
+        })
+
+
     }, [lista])
 
     return (
@@ -57,19 +78,7 @@ export const Dashboard = () => {
                         return <li key={listItem.id}>
                             <input type="checkbox"
                                 checked={listItem.isCompleted}
-                                onChange={() => {
-                                    setLista(oldList => {
-                                        return oldList.map(oldListItem => {
-                                            const newisCompleted = oldListItem.title === listItem.title
-                                                ? !oldListItem.isCompleted
-                                                : oldListItem.isCompleted
-                                            return {
-                                                ...oldListItem,
-                                                isCompleted: newisCompleted,
-                                            }
-                                        })
-                                    })
-                                }}
+                                onChange={() => handleTogleComplete(listItem.id)}
                             />
                             {listItem.title}
                         </li>
