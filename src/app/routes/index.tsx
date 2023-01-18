@@ -8,6 +8,7 @@ export const Routes = () => {
             <Switch>
                 <Route path="/autenticar" element={<Login />} />
                 <Route path="/pagina-inicial" element={<Dashboard />} />
+                <Route path="/" element={<p>Teste</p>} />
 
                 <Route path="*" element={<Navigate to="pagina-inicial" />} />
             </Switch >
