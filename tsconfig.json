@@ -4,7 +4,10 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "WebWorker",
+      "WebWorker.ImportScripts",
+      "Webworker.Iterable"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,7 +23,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
